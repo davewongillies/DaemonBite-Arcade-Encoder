@@ -23,11 +23,12 @@
 
 #include "Gamepad.h"
 
-//#define PS3                 // PS3 (ScpToolkit) compatibility (Comment out for joystick=X/Y-Axis and B11/B12 as normal buttons)
+#define PS3                 // PS3 joystick (ScpToolkit) compatibility (Comment out for joystick=X/Y-Axis)
+//#define PS3_BUTTONS       // PS3 button (ScpToolkit) compatibility (Comment out for B11/B12 as normal buttons)
 //#define NEOGEO
 
-#define DEBOUNCE 0          // 1=Diddly-squat-Delay-Debouncing™ activated, 0=Debounce deactivated
-#define DEBOUNCE_TIME 10    // Debounce time in milliseconds
+#define DEBOUNCE 1          // 1=Diddly-squat-Delay-Debouncing™ activated, 0=Debounce deactivated
+#define DEBOUNCE_TIME 100   // Debounce time in milliseconds
 //#define DEBUG             // Enables debugging (sends debug data to usb serial)
 
 #ifdef NEOGEO
@@ -167,7 +168,7 @@ void loop()
     // Has button inputs changed?
     if(buttons != buttonsPrev)
     {
-      #ifdef PS3
+      #ifdef PS3_BUTTONS
         Gamepad._GamepadReport.buttons = buttons & 0x3FF;
         if(buttons & 0x400) // B11
           Gamepad._GamepadReport.Z = -1;
